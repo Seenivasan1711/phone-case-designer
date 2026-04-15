@@ -7,6 +7,23 @@
 
 ---
 
+## 🔴 Active Decision Log
+
+### DECISION-001 — 3D Case Shape Approach (2026-04-15)
+**Problem:** Current `PhoneCase3D.tsx` renders a thick flat slab that looks like a phone body/screen, not a phone case shell.  
+**Root cause:** `caseD = 0.18` is too deep; `boxGeometry` has no taper; camera island is a raised bump instead of a cutout hole; material looks like a phone screen.  
+**Decision:** Rebuild using `ExtrudeGeometry` (rounded-rectangle cross-section) with:
+- Depth `0.07` (thin case shell)
+- Visible thin side walls when rotated (the "lip" of a case)
+- Camera cutout as a recessed dark oval — not a raised bump
+- Back face texture = user's design, entire back surface
+- Frame/side color = neutral off-white/grey plastic (not black like a phone body)
+- Per-model camera position (Nothing Phone 2: top-left; generic: top-left)
+**Status:** ✅ Decided → implementing now  
+**File:** `src/components/PhoneCase3D.tsx`
+
+---
+
 ## Legend
 - ✅ Done & shipped
 - 🔄 In progress / partially done
@@ -114,7 +131,7 @@ Templates: `src/data/templates.ts`
 | # | Task | Status | Notes |
 |---|------|--------|-------|
 | 3.4.1 | @react-three/fiber v8 + @react-three/drei v9 (React 18 compat) | ✅ | Was on v9 (React 19 only) — fixed |
-| 3.4.2 | Procedural phone case geometry (box + back plane) | ✅ | No .glb needed |
+| 3.4.2 | Procedural phone case geometry — proper CASE shell shape | 🔄 | Was a thick box (looked like phone body). Rebuilding as thin ExtrudeGeometry shell per DECISION-001 |
 | 3.4.3 | Design texture mapped to back face | ✅ | Snapshot on 3D tab switch |
 | 3.4.4 | Material roughness/metalness based on finish selection | ✅ | |
 | 3.4.5 | Camera island + side buttons modelled | ✅ | |
@@ -214,6 +231,7 @@ Templates: `src/data/templates.ts`
 
 | # | Issue | Severity | File | Notes |
 |---|-------|----------|------|-------|
+| B0 | **3D shape looks like a phone body/screen, not a phone case shell** | **Critical** | `PhoneCase3D.tsx` | Box is too thick (depth 0.18), camera island is a raised bump not a cutout, frame color is black. Fix: ExtrudeGeometry thin shell + proper camera recess. → **DECISION-001** |
 | B1 | 3D texture only updates on tab switch, not live | Medium | `PhoneCase3D.tsx` | Need to call `toDataURL` on `object:modified` event |
 | B2 | Pan tool doesn't restore object selectability after undo | Low | `DesignEditorV2.tsx` | Objects loaded from history snapshot may have `selectable: false` if pan was active |
 | B3 | Template background objects are `selectable: false` but user can't tell | Low | `DesignEditorV2.tsx` | Should show visual affordance or make them selectable |

@@ -898,6 +898,7 @@ export default function DesignEditorV2({ model }: Props) {
                 <PhoneCase3D
                   designDataUrl={designDataUrl}
                   materialType={material}
+                  modelId={model.id}
                   canvasWidth={W}
                   canvasHeight={H}
                 />
