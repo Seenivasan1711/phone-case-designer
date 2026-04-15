@@ -1,0 +1,43 @@
+HOW TO ADD PHONE FRAME CUTOUT PNGs
+====================================
+
+Drop PNG files in this folder named exactly after the model ID.
+
+Model IDs (from src/lib/phoneModels.ts):
+  iphone-15.png
+  iphone-15-pro.png
+  iphone-14.png
+  samsung-s24.png
+  samsung-s24-ultra.png
+  samsung-s23.png
+  pixel-8.png
+  pixel-8-pro.png
+  oneplus-12.png
+  nothing-phone-2.png
+
+PNG SPEC:
+  - Transparent hole where the design canvas shows through (alpha = 0 inside case)
+  - Opaque phone body: frame, camera module, buttons (alpha = 255)
+  - Recommended width: 800px, height scaled to canvasWidth:canvasHeight ratio
+  - Format: PNG-24 with alpha channel
+
+WHERE TO GET FRAMES:
+  Option A: Create in Figma (full control, ~20min per model)
+            1. Draw rounded rect for phone body
+            2. Add camera module, buttons as separate shapes
+            3. Boolean subtract the case area -> transparent hole
+            4. Export 2x PNG
+
+  Option B: Free resources
+            - mockuphone.com  (free device frames)
+            - facebook.github.io/device-year-class  (open source)
+            - LS.Graphics (free tier)
+
+  Option C: Use the stayclassy.in style PNGs
+            e.g. https://stayclassy.in/wp-content/uploads/2026/02/Nothing-Phone-2-Cut.png
+            Download, remove any watermarks, resize to spec.
+
+HOW IT WORKS IN CODE:
+  PhoneFrame.tsx tries to load /frames/{model-id}.png first.
+  If the file is missing (404), it falls back to the built-in SVG frame.
+  No code changes needed — just drop the PNG here and reload.

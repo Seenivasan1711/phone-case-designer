@@ -26,25 +26,17 @@ export default function DesignPage({ params }: Props) {
   if (!phoneModel) notFound();
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
+    <div className="space-y-4">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-sm">
         <Link
           href="/"
-          className="flex items-center gap-1 text-sm text-gray-500 hover:text-purple-600 transition-colors"
+          className="flex items-center gap-1 text-gray-400 hover:text-purple-600 transition-colors"
         >
           <ChevronLeft className="w-4 h-4" /> All Models
         </Link>
-        <span className="text-gray-300">/</span>
-        <span className="text-sm text-gray-700 font-medium">{phoneModel.displayName}</span>
-      </div>
-
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">
-          Design your {phoneModel.displayName} case
-        </h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Upload images, add text, pick colors — then add to cart when you&apos;re happy.
-        </p>
+        <span className="text-gray-200">/</span>
+        <span className="text-gray-600 font-medium">{phoneModel.displayName}</span>
       </div>
 
       <DesignEditor model={phoneModel} />
